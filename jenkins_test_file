@@ -4,17 +4,17 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo 'build'
+                echo 'build from git'
             }
         }
         stage('test') {
             steps {
-                echo 'test'
+                echo 'test from git'
             }
         }
         stage('deploy') {
             steps {
-                echo 'deploy'
+                echo 'deploy from git'
             }
         }
     }
