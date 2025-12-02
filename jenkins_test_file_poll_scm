@@ -14,7 +14,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                echo 'deploy from git 15:41'
+                echo 'deploy from git 15:44'
             }
         }
     }
