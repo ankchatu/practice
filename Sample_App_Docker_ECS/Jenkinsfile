@@ -22,5 +22,12 @@ pipeline {
                 archiveArtifacts artifacts: 'Sample_App_Docker_ECS/target/*.jar', fingerprint: true
             }
         }
+
+        stage('Run Application (Optional)') {
+            steps {
+                bat 'java -jar Sample_App_Docker_ECS/target/*.jar'
+            }
+        }
+
     }
 }
