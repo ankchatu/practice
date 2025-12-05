@@ -23,16 +23,26 @@ pipeline {
             }
         }
 
-        stage('Run Application (Optional)') {
+        stage('Build Docker Image') {
             steps {
-                bat '''
-                    echo Checking for built JAR file...
-                    for %%f in ("Sample_App_Docker_ECS\\target\\*.jar") do set JAR=%%f
-                    echo Running %JAR%
-                    java -jar "%JAR%"
-                '''
+                dir('Sample_App_Docker_ECS') {
+                    bat 'docker build -t sample-ecs-app .'
+                }
             }
         }
 
+        stage('Run Container (Test)') {
+            steps {
+                bat 'docker run -d -p 8080:8080 --name sample-container sample-ecs-app'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Stop and delete container if already running
+            bat 'docker stop sample-container || echo "Container not running"'
+            bat 'docker rm sample-container || echo "Container already removed"'
+        }
     }
 }
