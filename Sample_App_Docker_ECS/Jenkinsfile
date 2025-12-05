@@ -25,7 +25,12 @@ pipeline {
 
         stage('Run Application (Optional)') {
             steps {
-                bat 'java -jar Sample_App_Docker_ECS/target/*.jar'
+                bat '''
+                    echo Checking for built JAR file...
+                    for %%f in ("Sample_App_Docker_ECS\\target\\*.jar") do set JAR=%%f
+                    echo Running %JAR%
+                    java -jar "%JAR%"
+                '''
             }
         }
 
