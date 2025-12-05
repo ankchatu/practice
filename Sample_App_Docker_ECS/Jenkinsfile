@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ankchatu/practice.git'
+            }
+        }
+
+        stage('Build Maven Project') {
+            steps {
+                dir('Sample_App_Docker_ECS') {   // <-- because your pom is inside this folder
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+        stage('Archive JAR') {
+            steps {
+                archiveArtifacts artifacts: 'Sample_App_Docker_ECS/target/*.jar', fingerprint: true
+            }
+        }
+    }
+}
