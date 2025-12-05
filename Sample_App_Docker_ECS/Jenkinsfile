@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build Maven Project') {
             steps {
-                dir('Sample_App_Docker_ECS') {   // <-- because your pom is inside this folder
+                dir('Sample_App_Docker_ECS') {
                     sh 'mvn clean package -DskipTests'
                 }
             }
